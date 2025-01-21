@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import FileUpload from "./FileUpload";
+import React, { useState, StrictMode } from "react";
 import { Cloudinary } from '@cloudinary/url-gen';
 import { AdvancedImage, responsive, placeholder } from '@cloudinary/react';
 import CloudWidget from "./CloudWidget";
 
-function EditRecipe({ recipe, editRecipe }) {
+function EditRecipe({ recipe, editRecipe, setAddItem}) {
   const cloudName = 'dwyipecoa';
 
   // State
@@ -65,11 +64,15 @@ function EditRecipe({ recipe, editRecipe }) {
     });
   };
 
-  return (<div>
- <form onSubmit={handleSubmit}>
+  function cancelEdit(){
+    setAddItem(false);
+  }
+
+  return (<StrictMode>
+ <form onSubmit={handleSubmit} class="bg-white shadow-md rounded py-2 px-3" style={{width: "600px", justifySelf: 'center'}}>
       <div>
         <label>
-          Name:
+          Name
           <input
             className="form-input"
             type="text"
@@ -77,12 +80,13 @@ function EditRecipe({ recipe, editRecipe }) {
             value={formData.name}
             onChange={handleChange}
             required
+            class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
           />
         </label>
       </div>
       <div>
         <label>
-          Calories:
+          Calories
           <input
             className="form-input"
             type="number"
@@ -90,12 +94,13 @@ function EditRecipe({ recipe, editRecipe }) {
             value={formData.calories}
             onChange={handleChange}
             required
+            class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
           />
         </label>
       </div>
       <div>
-       {!imageCloud && <label>
-          Image URL:
+       <label>
+          Image URL
           <input
             className="form-input"
             type="text"
@@ -103,8 +108,9 @@ function EditRecipe({ recipe, editRecipe }) {
             value={formData.image}
             onChange={handleChange}
             required
+            class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
           />
-        </label>}
+        </label>
 
        <div className="cloud-widget"> <CloudWidget customPublicId={publicId} setPublicId={setPublicId} setImageCloud={setImageCloud}/>
         {(publicId!=="") && (
@@ -116,9 +122,10 @@ function EditRecipe({ recipe, editRecipe }) {
       </div>
       <div>
         <label>
-          Description:
+          Description
           <textarea
             className="form-input"
+            class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             name="description"
             value={formData.description}
             onChange={handleChange}
@@ -128,9 +135,10 @@ function EditRecipe({ recipe, editRecipe }) {
       </div>
       <div>
         <label>
-          Servings:
+          Servings
           <input
             className="form-input"
+            class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             type="number"
             name="servings"
             value={formData.servings}
@@ -141,9 +149,10 @@ function EditRecipe({ recipe, editRecipe }) {
       </div>
       <div>
         <label>
-          Ingredients:
+          Ingredients
           <textarea
             className="form-input"
+            class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             name="ingredients"
             value={formData.ingredients}
             onChange={handleChange}
@@ -153,9 +162,10 @@ function EditRecipe({ recipe, editRecipe }) {
       </div>
       <div>
         <label>
-          Instructions:
+          Instructions
           <textarea
             className="form-input"
+            class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             name="instructions"
             value={formData.instructions}
             onChange={handleChange}
@@ -163,11 +173,12 @@ function EditRecipe({ recipe, editRecipe }) {
           />
         </label>
       </div>
-      <button type="submit">Edit Recipe</button>
+      <button className="btn-block" type="submit">Edit Recipe</button>
+      <button className="btn-block" onClick={cancelEdit}>Cancel Edit</button>
     </form>
 
  
-  </div>
+    </StrictMode>
   );
 }
 
